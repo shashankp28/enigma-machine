@@ -24,10 +24,16 @@ make
 
 **NOTE:** `MAKE SURE THAT PROMPT FILE ENDS WITH --exit-- IN A NEW LINE`
 
-7. To run `The Enigma Machine` run the following command:
+7. To Encrypt using `The Enigma Machine` run the following command:
 
 ```
 ./bin/enigma ./enigma.conf ./my.conf < ./input.txt > ./output.txt
 ```
 
-8. Encryption/Decryption Rate: `~ 3.94 MB/s`
+8. To Decrypt using `The Enigma Machine` switch the input and output files:
+
+```
+./bin/enigma ./enigma.conf ./my.conf < ./output.txt > ./input.txt
+```
+
+9. Encryption/Decryption Rate: `~ 3.94 MB/s`
