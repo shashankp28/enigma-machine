@@ -119,14 +119,13 @@ vector<pair<int, int>> parsePanel(string panelConf)
     return panelConfig;
 }
 
-vector<vector<int>> parseRotors(map<string, string> &generalConfig,
-                                map<string, string> &specificConfig)
+vector<vector<int>> parseRotors(map<string, string> &generalConfig)
 {
     vector<vector<int>> rotorConfigs;
-    vector<string> rotors = split(specificConfig["ROTORS"], " ");
+    vector<string> rotors = split(generalConfig["ROTORS"], " ");
     if (rotors.size() != 3)
     {
-        throw invalid_argument("Invalid rotor configuration: " + specificConfig["ROTORS"]);
+        throw invalid_argument("Invalid rotor configuration: " + generalConfig["ROTORS"]);
     }
     for (int i = 0; i < 3; i++)
     {

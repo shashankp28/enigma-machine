@@ -15,18 +15,16 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    if (argc != 3)
+    if (argc != 4)
     {
-        cout << "Usage: ./bin/enigma <general_config_path> <specific_config_path>" << endl;
+        cout << "Usage: ./bin/enigma <general_config_path> <input_file> <output_file>" << endl;
         return 1;
     }
     map<string, string> generalConfig = parseConfig(argv[1]);
-    map<string, string> specificConfig = parseConfig(argv[2]);
     vector<pair<int, int>> reflectorConfig = parseReflector(generalConfig["REFLECTOR"]);
-    vector<pair<int, int>> frontPanelConfig = parsePanel(specificConfig["PLUGBOARD"]);
-    vector<vector<int>> rotorConfigs = parseRotors(generalConfig, specificConfig);
-    vector<int> rotorPositions = parseRotortPositions(specificConfig["ROTOR_POSITIONS"]);
-
+    vector<pair<int, int>> frontPanelConfig = parsePanel(generalConfig["PLUGBOARD"]);
+    vector<vector<int>> rotorConfigs = parseRotors(generalConfig);
+    vector<int> rotorPositions = parseRotortPositions(generalConfig["ROTOR_POSITIONS"]);
 
     Reflector *reflector = new Reflector(reflectorConfig);
     FrontPanel *frontPanel = new FrontPanel(frontPanelConfig);
@@ -38,17 +36,26 @@ int main(int argc, char *argv[])
     rotor3->setCurrentPosition(rotorPositions[2]);
     Controller *controller = new Controller(rotor1, rotor2, rotor3, reflector, frontPanel);
     string input;
-    while (1)
+    ifstream inputFile(argv[2]);
+    ofstream outputFile(argv[3]);
+    if (!inputFile.is_open())
     {
-        getline(cin, input);
-        if (input == "--exit--")
-        {
-            cout << "--exit--" << endl;
-            break;
-        }
-        transform(input.begin(), input.end(), input.begin(), ::toupper);
-        string output = controller->run(input);
-        cout << output << endl;
+        throw invalid_argument("Could not open input file");
     }
+    string line;
+    try
+    {
+        while (getline(inputFile, line))
+        {
+            string output = controller->run(line);
+            outputFile << output << endl;
+        }
+    }
+    catch (const invalid_argument &e)
+    {
+        cout << e.what() << endl;
+    }
+    inputFile.close();
+    outputFile.close();
     return 0;
 }
