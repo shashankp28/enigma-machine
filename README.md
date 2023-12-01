@@ -27,5 +27,5 @@ make
 7. To run `The Enigma Machine` run the following command:
 
 ```
-./bin/enigma ./enigma.conf ./my.conf < ./prompt.txt > ./output.txt
+./bin/enigma ./enigma.conf ./my.conf < ./input.txt > ./output.txt
 ```
