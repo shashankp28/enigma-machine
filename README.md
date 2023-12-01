@@ -5,7 +5,7 @@
 1. Clone the repository:
 
 ```
-cloning
+git clone https://github.com/shashankp28/enigma-machine.git
 ```
 
 2. To build `The Enigma Machine` run the following command:
