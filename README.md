@@ -30,4 +30,4 @@ make
 ./bin/enigma ./enigma.conf ./my.conf < ./input.txt > ./output.txt
 ```
 
-8. Encryption Rate: `~ 3.94 MB/s`
+8. Encryption/Decryption Rate: `~ 3.94 MB/s`
